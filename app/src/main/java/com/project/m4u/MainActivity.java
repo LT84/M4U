@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,49 +22,69 @@ import com.project.m4u.rest.MovieApiImpl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMovieListener {
 
-    private MovieAdapter movieAdapter;
+    int positionRecyclerView;
 
     private RecyclerView movieRv;
 
-    private final MovieApi movieApi = new MovieApiImpl(this);
+    private MovieAdapter movieAdapter;
 
-    private MyDbManager myDbManager = new MyDbManager(MainActivity.this);
+    private final List<Movie> movieList = new ArrayList<>();
 
     LinearLayoutManager llm = new LinearLayoutManager(this);
 
-    int positionRecyclerView;
+    private final MovieApi movieApi = new MovieApiImpl(this);
 
-    ImageButton backBtn;
+    private final MyDbManager myDbManager = new MyDbManager(MainActivity.this);
+
+    ImageButton backBtn, refreshBtn;
     TextView tv_description, tv_country, tv_actors, tv_about_movie_name;
-
-    List<Movie> movieList = new ArrayList<>();
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Toast.makeText(this, Integer.toString(myDbManager.getMoviesFromDb().size()), Toast.LENGTH_SHORT).show();
-        movieRv.invalidate();
-        movieAdapter.notifyDataSetChanged();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        movieApi.fillCountry();
-        movieApi.fillGenre();
-        movieApi.fillActor();
-        movieApi.fillMovie();
+        movieRv = (RecyclerView) findViewById(R.id.rv_movies);
+        refreshBtn = findViewById(R.id.btn_refresh_list);
+        refreshBtn.setOnClickListener(btnL);
+
+        fillLists();
 
         movieList.addAll(myDbManager.getMoviesFromDb());
-        movieRv = (RecyclerView) findViewById(R.id.rv_movies);
         movieAdapter = new MovieAdapter(this, movieList, this);
         movieRv.setAdapter(movieAdapter);
         movieRv.setLayoutManager(llm);
     }
+
+    View.OnClickListener btnL = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            movieList.clear();
+            fillLists();
+            movieList.addAll(myDbManager.getMoviesFromDb());
+            movieAdapter.notifyDataSetChanged();
+            refreshBtn.setEnabled(false);
+
+
+            Timer buttonTimer = new Timer();
+            buttonTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            refreshBtn.setEnabled(true);
+                        }
+                    });
+                }
+            }, 5000);
+        }
+    };
 
     @Override
     public void onMovieClick(int position) throws IOException {
@@ -99,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
 
         //Create the popup window
         int width = LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = 1700;
+        int height = 2000;
         boolean focusable = true; // lets taps outside the popup also dismiss it
         PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
@@ -107,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
         //Which view you pass in doesn't matter, it is only used for the window token
         popupWindow.setAnimationStyle(R.style.popupWindowAnimation);
         popupWindow.showAtLocation(popupView, Gravity.CENTER_VERTICAL, 0, 0);
-
 
         //CloseAlertPopupBtn listener
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -117,4 +135,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
             }
         });
     }
+
+    private void fillLists() {
+        movieApi.fillCountry();
+        movieApi.fillGenre();
+        movieApi.fillActor();
+        movieApi.fillMovie();
+    }
+
 }
