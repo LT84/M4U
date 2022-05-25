@@ -32,6 +32,10 @@ public class MyDbManager {
         db = myDbHelper.getReadableDatabase();
     }
 
+    public void openWritableDb() {
+        db = myDbHelper.getWritableDatabase();
+    }
+
     public void insertToDb(Movie movie) {
         openDb();
         cv = new ContentValues();
@@ -147,7 +151,6 @@ public class MyDbManager {
             }
         }
         cursor.close();
-        closeDb();
         return tempList;
     }
 

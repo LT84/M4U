@@ -3,7 +3,7 @@ package com.project.m4u.db;
 
 public final class MyConstants {
   public static final String DB_NAME ="M4UDB";
-  public static final int DB_VERSION = 15;
+  public static final int DB_VERSION = 18;
 
   public static final String DESCRIPTION = "description";
   public static final String TABLE_NAME_MOVIE = "my_table_movie";
@@ -22,7 +22,7 @@ public final class MyConstants {
 
   public static final String TABLE_NAME_COUNTRY = "my_table_countries";
   public static final String COUNTRY_NAME = "title_country";
-  public static final String COUNTRY_ID = "_id";
+  public static final String COUNTRY_ID = "country_id";
 
   public static final String TABLE_COUNTRY_STRUCTURE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_COUNTRY +
           " (" + COUNTRY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -31,17 +31,19 @@ public final class MyConstants {
 
   public static final String TABLE_NAME_GENRE = "my_table_genre";
   public static final String GENRE_NAME = "title_genre";
+  public static final String GENRE_ID = "genre_id";
 
   public static final String TABLE_GENRE_STRUCTURE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_GENRE +
-          " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+          " (" + GENRE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
           GENRE_NAME + " TEXT );";
 
 
-  public static final String TABLE_NAME_ACTOR = "my_table_countries";
+  public static final String TABLE_NAME_ACTOR = "my_table_actor";
   public static final String ACTOR_NAME = "title_actor";
+  public static final String ACTOR_ID = "genre_id";
 
   public static final String TABLE_ACTOR_STRUCTURE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_ACTOR +
-          " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+          " (" + ACTOR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
           ACTOR_NAME + " TEXT );";
 
 

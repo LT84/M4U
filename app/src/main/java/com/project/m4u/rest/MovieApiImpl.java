@@ -95,7 +95,7 @@ public class MovieApiImpl implements MovieApi {
 
                                 Genre genre = new GenreMapper().genreFromJsonArray(jsonObject);
                                 myDbManager.insertGenreDb(genre);
-//                                Toast.makeText(context, genre.getName(), Toast.LENGTH_SHORT).show();
+                               //Toast.makeText(context, genre.getName(), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             Log.d("GENRES", e.getMessage());
@@ -129,6 +129,7 @@ public class MovieApiImpl implements MovieApi {
 
                                 Actor actor = new ActorMapper().actorFromJsonArray(jsonObject);
                                 myDbManager.insertActorDb(actor);
+                               // Toast.makeText(context, actor.getName(), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             Log.d("COUNTRIES", e.getMessage());
@@ -163,7 +164,7 @@ public class MovieApiImpl implements MovieApi {
 
                                 Movie movie = new MovieMapper().movieFromJsonArray(jsonObject);;
                                 myDbManager.insertToDb(movie);
-//                                Toast.makeText(context, movie.getName() + "FILLMDB", Toast.LENGTH_SHORT).show();
+//                              Toast.makeText(context, movie.getName() + "FILLMDB", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             Log.d("BOOKS", e.getMessage());

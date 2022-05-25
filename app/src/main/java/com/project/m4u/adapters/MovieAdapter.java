@@ -24,7 +24,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private LayoutInflater inflater;
     private Context mContext;
 
-    public static List<Movie> movieList = new ArrayList<>();
+    private List<Movie> movieList = new ArrayList<>();
 
     private OnMovieListener mOnMovieListener;
 
@@ -93,6 +93,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             }
         }
     }
+
 
     public interface OnMovieListener {
         void onMovieClick(int position) throws IOException;

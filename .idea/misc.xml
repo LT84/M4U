@@ -4,11 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/CyPoBo/AndroidStudioProjects/M4U/app/src/main/res/drawable/ic_arrow_back.xml" value="0.2325" />
+        <entry key="..\:/Users/CyPoBo/AndroidStudioProjects/M4U/app/src/main/res/drawable/ic_close_24.xml" value="0.269" />
         <entry key="..\:/Users/CyPoBo/AndroidStudioProjects/M4U/app/src/main/res/drawable/ic_launcher_background.xml" value="0.288" />
+        <entry key="..\:/Users/CyPoBo/AndroidStudioProjects/M4U/app/src/main/res/drawable/popup_window.xml" value="0.2325" />
         <entry key="..\:/Users/CyPoBo/AndroidStudioProjects/M4U/app/src/main/res/layout/about_movie.xml" value="0.17755825734549138" />
         <entry key="..\:/Users/CyPoBo/AndroidStudioProjects/M4U/app/src/main/res/layout/activity_main.xml" value="0.24592391304347827" />
         <entry key="..\:/Users/CyPoBo/AndroidStudioProjects/M4U/app/src/main/res/layout/fragment_about_movie.xml" value="0.33695652173913043" />
         <entry key="..\:/Users/CyPoBo/AndroidStudioProjects/M4U/app/src/main/res/layout/item_movie.xml" value="0.24592391304347827" />
+        <entry key="..\:/Users/CyPoBo/AndroidStudioProjects/M4U/app/src/main/res/layout/popup_window.xml" value="0.22" />
       </map>
     </option>
   </component>
