@@ -2,7 +2,6 @@ package com.project.m4u.rest;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -181,7 +180,7 @@ public class MovieApiImpl implements MovieApi {
     private class ErrorListenerImpl implements Response.ErrorListener {
         @Override
         public void onErrorResponse(VolleyError error) {
-            Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show();
+            Log.e("ErrorConnection", "Error");
         }
     }
 }
