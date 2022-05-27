@@ -13,7 +13,7 @@ public class CountryMapper {
 
         try {
 
-            country = new Country (
+            country = new Country(
                     jsonObject.getInt("id"),
                     jsonObject.getString("name")
             );
@@ -23,4 +23,21 @@ public class CountryMapper {
         }
         return country;
     }
+
+    public Country countryFromMovieJsonArray(JSONObject jsonObject) {
+
+        Country country = null;
+        try {
+
+            country = new Country(
+                    jsonObject.getJSONObject("countryDto").getInt("id"),
+                    jsonObject.getJSONObject("countryDto").getString("name")
+            );
+        } catch (JSONException e) {
+
+            e.printStackTrace();
+        }
+        return country;
+    }
+
 }

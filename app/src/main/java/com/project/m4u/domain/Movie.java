@@ -2,31 +2,31 @@ package com.project.m4u.domain;
 
 public class Movie {
 
-   private int id;
+    private int id;
 
-   private String name;
+    private String name;
 
-   private String year;
+    private String year;
 
-   private String picUrl;
+    private String picUrl;
 
-   private String description;
+    private String description;
 
-   private String country;
+    private int countryId;
 
-   private String genre;
+    private int genreId;
 
-   private String actor;
+    private int actorId;
 
-    public Movie(int id, String name, String year, String picUrl, String description, String country, String genre, String actor) {
+    public Movie(int id, String name, String year, String picUrl, String description, int country, int genre, int actor) {
         this.id = id;
         this.name = name;
         this.year = year;
         this.picUrl = picUrl;
         this.description = description;
-        this.country = country;
-        this.genre = genre;
-        this.actor = actor;
+        this.countryId = country;
+        this.genreId = genre;
+        this.actorId = actor;
     }
 
     public int getId() {
@@ -49,16 +49,16 @@ public class Movie {
         return description;
     }
 
-    public String getCountry() {
-        return country;
+    public int getCountryId() {
+        return countryId;
     }
 
-    public String getGenre() {
-        return genre;
+    public int getGenreId() {
+        return genreId;
     }
 
-    public String getActor() {
-        return actor;
+    public int getActorId() {
+        return actorId;
     }
 
     public void setName(String name) {
@@ -71,10 +71,9 @@ public class Movie {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", year=" + year +
-                ", countryList=" + country +
-                ", genreList=" + genre +
-                ", actorList=" + actor +
+                ", countryList=" + countryId +
+                ", genreList=" + genreId +
+                ", actorList=" + actorId +
                 '}';
     }
-
 }

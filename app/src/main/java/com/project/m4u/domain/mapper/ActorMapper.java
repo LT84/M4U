@@ -23,4 +23,20 @@ public class ActorMapper {
         }
         return actor;
     }
+
+    public Actor actorFromMovieJsonArray(JSONObject jsonObject) {
+
+        Actor actor = null;
+        try {
+
+            actor = new Actor(
+                    jsonObject.getJSONObject("actorDto").getInt("id"),
+                    jsonObject.getJSONObject("actorDto").getString("name")
+            );
+        } catch (JSONException e) {
+
+            e.printStackTrace();
+        }
+        return actor;
+    }
 }

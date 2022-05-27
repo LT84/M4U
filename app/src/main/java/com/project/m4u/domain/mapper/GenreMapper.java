@@ -13,9 +13,25 @@ public class GenreMapper {
 
         try {
 
-            genre = new Genre (
+            genre = new Genre(
                     jsonObject.getInt("id"),
                     jsonObject.getString("name")
+            );
+        } catch (JSONException e) {
+
+            e.printStackTrace();
+        }
+        return genre;
+    }
+
+    public Genre genreFromMovieJsonArray(JSONObject jsonObject) {
+
+        Genre genre = null;
+        try {
+
+            genre = new Genre(
+                    jsonObject.getJSONObject("genreDto").getInt("id"),
+                    jsonObject.getJSONObject("genreDto").getString("name")
             );
         } catch (JSONException e) {
 

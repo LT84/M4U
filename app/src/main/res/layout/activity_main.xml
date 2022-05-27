@@ -11,8 +11,8 @@
         android:id="@+id/btn_refresh_list"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:background="@drawable/ic_refresh_24"
-        android:layout_gravity="end"/>
+        android:layout_gravity="end"
+        android:background="@drawable/ic_refresh_24" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_movies"

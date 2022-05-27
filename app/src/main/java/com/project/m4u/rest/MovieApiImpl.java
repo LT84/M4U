@@ -25,12 +25,13 @@ import org.json.JSONObject;
 
 public class MovieApiImpl implements MovieApi {
 
-    public static final String BASE_URL = "http://192.168.1.67:8080";
-
-    private final Context context;
-
-    private Response.ErrorListener errorListener;
+    RequestQueue queue;
     MyDbManager myDbManager;
+    private final Context context;
+    JsonArrayRequest jsonArrayRequest;
+    private Response.ErrorListener errorListener;
+    public static final String BASE_URL = "http://*********:8080";
+
 
     public MovieApiImpl(Context context) {
         this.context = context;
@@ -41,10 +42,9 @@ public class MovieApiImpl implements MovieApi {
     @Override
     public void fillCountry() {
         myDbManager.openDb();
-        RequestQueue queue = Volley.newRequestQueue(context);
+        queue = Volley.newRequestQueue(context);
         String url = BASE_URL + "/country";
-        myDbManager = new MyDbManager(context);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+        jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 url,
                 null,
@@ -52,29 +52,199 @@ public class MovieApiImpl implements MovieApi {
 
                     @Override
                     public void onResponse(JSONArray response) {
-
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
-
                                 Country country = new CountryMapper().countryFromJsonArray(jsonObject);
                                 myDbManager.insertCountryDb(country);
-//                                Toast.makeText(context, Integer.toString(myDbManager.getCountriesFromDb().size()), Toast.LENGTH_SHORT).show();
-//                                Toast.makeText(context, country.getName(), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
-                            Log.d("COUNTRIES", e.getMessage());
+                            Log.i("fillCountry", e.getMessage());
                         }
                     }
                 },
                 errorListener
         );
+
         queue.add(jsonArrayRequest);
         myDbManager.closeDb();
     }
 
     @Override
     public void fillGenre() {
+        myDbManager.openDb();
+        queue = Volley.newRequestQueue(context);
+        String url = BASE_URL + "/genre";
+        jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                Genre genre = new GenreMapper().genreFromJsonArray(jsonObject);
+                                myDbManager.insertGenreDb(genre);
+                            }
+                        } catch (JSONException e) {
+                            Log.i("fillGenre", e.getMessage());
+                        }
+                    }
+                },
+                errorListener
+        );
+
+        queue.add(jsonArrayRequest);
+        myDbManager.closeDb();
+    }
+
+    @Override
+    public void fillActor() {
+        myDbManager.openDb();
+        queue = Volley.newRequestQueue(context);
+        String url = BASE_URL + "/actor";
+        jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                Actor actor = new ActorMapper().actorFromJsonArray(jsonObject);
+                                myDbManager.insertActorDb(actor);
+                            }
+                        } catch (JSONException e) {
+                            Log.i("fillActor", e.getMessage());
+                        }
+                    }
+                },
+                errorListener
+        );
+
+        queue.add(jsonArrayRequest);
+        myDbManager.closeDb();
+    }
+
+    @Override
+    public void fillMovie() {
+        myDbManager.openDb();
+        queue = Volley.newRequestQueue(context);
+        String url = BASE_URL + "/movie";
+        jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+
+                                Country country = new CountryMapper().countryFromMovieJsonArray(jsonObject);
+                                Genre genre = new GenreMapper().genreFromMovieJsonArray(jsonObject);
+                                Actor actor = new ActorMapper().actorFromMovieJsonArray(jsonObject);
+                                Movie movie = new MovieMapper().movieFromJsonArray(jsonObject,
+                                        country.getId(),
+                                        genre.getId(),
+                                        actor.getId());
+
+                                myDbManager.insertMovieToDb(movie);
+                            }
+                        } catch (JSONException e) {
+                            Log.i("fillMovie", e.getMessage());
+                        }
+                    }
+                },
+                errorListener
+        );
+
+        queue.add(jsonArrayRequest);
+        myDbManager.closeDb();
+    }
+
+    @Override
+    public void updateMovie() {
+        myDbManager.openDb();
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = BASE_URL + "/movie";
+        myDbManager = new MyDbManager(context);
+        jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+
+                                Country country = new CountryMapper().countryFromMovieJsonArray(jsonObject);
+                                Genre genre = new GenreMapper().genreFromMovieJsonArray(jsonObject);
+                                Actor actor = new ActorMapper().actorFromMovieJsonArray(jsonObject);
+                                Movie movie = new MovieMapper().movieFromJsonArray(jsonObject,
+                                        country.getId(),
+                                        genre.getId(),
+                                        actor.getId());
+
+                                myDbManager.updateMovieDb(movie);
+                            }
+                        } catch (JSONException e) {
+                            Log.d("updateMovie", e.getMessage());
+                        }
+                    }
+                },
+                errorListener
+        );
+
+        queue.add(jsonArrayRequest);
+        myDbManager.closeDb();
+    }
+
+    @Override
+    public void updateCountry() {
+        myDbManager.openDb();
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = BASE_URL + "/country";
+        myDbManager = new MyDbManager(context);
+        jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                Country country = new CountryMapper().countryFromJsonArray(jsonObject);
+                                myDbManager.updateCountryDb(country);
+                            }
+                        } catch (JSONException e) {
+                            Log.i("updateCountry", e.getMessage());
+                        }
+                    }
+                },
+                errorListener
+        );
+
+        queue.add(jsonArrayRequest);
+        myDbManager.closeDb();
+    }
+
+    @Override
+    public void updateGenre() {
         myDbManager.openDb();
         RequestQueue queue = Volley.newRequestQueue(context);
         String url = BASE_URL + "/genre";
@@ -87,28 +257,26 @@ public class MovieApiImpl implements MovieApi {
 
                     @Override
                     public void onResponse(JSONArray response) {
-
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
-
                                 Genre genre = new GenreMapper().genreFromJsonArray(jsonObject);
-                                myDbManager.insertGenreDb(genre);
-                               //Toast.makeText(context, genre.getName(), Toast.LENGTH_SHORT).show();
+                                myDbManager.updateGenreDb(genre);
                             }
                         } catch (JSONException e) {
-                            Log.d("GENRES", e.getMessage());
+                            Log.i("updateGenre", e.getMessage());
                         }
                     }
                 },
                 errorListener
         );
+
         queue.add(jsonArrayRequest);
         myDbManager.closeDb();
     }
 
     @Override
-    public void fillActor() {
+    public void updateActor() {
         myDbManager.openDb();
         RequestQueue queue = Volley.newRequestQueue(context);
         String url = BASE_URL + "/actor";
@@ -125,53 +293,17 @@ public class MovieApiImpl implements MovieApi {
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
-
                                 Actor actor = new ActorMapper().actorFromJsonArray(jsonObject);
-                                myDbManager.insertActorDb(actor);
-                               // Toast.makeText(context, actor.getName(), Toast.LENGTH_SHORT).show();
+                                myDbManager.updateActorDb(actor);
                             }
                         } catch (JSONException e) {
-                            Log.d("COUNTRIES", e.getMessage());
+                            Log.i("updateActor", e.getMessage());
                         }
                     }
                 },
                 errorListener
         );
-        queue.add(jsonArrayRequest);
-        myDbManager.closeDb();
-    }
 
-    @Override
-    public void fillMovie() {
-        myDbManager.openDb();
-        RequestQueue queue = Volley.newRequestQueue(context);
-        String url = BASE_URL + "/movie";
-        myDbManager = new MyDbManager(context);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-
-                        try {
-                            for (int i = 0; i < response.length(); i++) {
-
-                                JSONObject jsonObject = response.getJSONObject(i);
-
-                                Movie movie = new MovieMapper().movieFromJsonArray(jsonObject);;
-                                myDbManager.insertToDb(movie);
-//                              Toast.makeText(context, movie.getName() + "FILLMDB", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            Log.d("BOOKS", e.getMessage());
-                        }
-                    }
-                },
-                errorListener
-        );
         queue.add(jsonArrayRequest);
         myDbManager.closeDb();
     }

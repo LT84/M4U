@@ -9,4 +9,12 @@ public interface MovieApi {
     void fillGenre();
 
     void fillActor();
+
+    void updateMovie();
+
+    void updateCountry();
+
+    void updateGenre();
+
+    void updateActor();
 }

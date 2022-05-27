@@ -1,5 +1,7 @@
 package com.project.m4u.adapters;
 
+import static com.project.m4u.MainActivity.genreList;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,15 +18,15 @@ import com.project.m4u.R;
 import com.project.m4u.domain.Movie;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private LayoutInflater inflater;
     private Context mContext;
 
-    private List<Movie> movieList = new ArrayList<>();
+    private LayoutInflater inflater;
+
+    private List<Movie> movieList;
 
     private OnMovieListener mOnMovieListener;
 
@@ -46,7 +48,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder,
-                                 @SuppressLint("RecyclerView")int position) {
+                                 @SuppressLint("RecyclerView") int position) {
 
         Movie movie = movieList.get(position);
 
@@ -55,7 +57,12 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 .into(((MyViewHolder) holder).iv_poster);
 
         ((MyViewHolder) holder).tv_name.setText(movie.getName());
-        ((MyViewHolder) holder).tv_genre.setText(movie.getGenre());
+
+        ((MyViewHolder) holder)
+                .tv_genre
+                .setText(genreList.get(movieList.get(position).getGenreId() - 1)
+                .getName());
+
         ((MyViewHolder) holder).tv_year.setText(movie.getYear());
     }
 

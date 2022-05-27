@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class MovieMapper {
 
-    public Movie movieFromJsonArray(JSONObject jsonObject) {
+    public Movie movieFromJsonArray(JSONObject jsonObject, int countryId, int genreId, int actorId) {
 
         Movie movie = null;
 
@@ -18,9 +18,9 @@ public class MovieMapper {
                     jsonObject.getString("year"),
                     jsonObject.getString("picUrl"),
                     jsonObject.getString("description"),
-                    null,
-                    null,
-                    null
+                    countryId,
+                    genreId,
+                    actorId
             );
         } catch (JSONException e) {
             e.printStackTrace();
