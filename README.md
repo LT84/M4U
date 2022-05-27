@@ -4,3 +4,6 @@ M4U - список фильмов для вас
 
 
 ![screenshots](https://user-images.githubusercontent.com/98738839/170724651-14b70e81-2678-4638-a2d9-ae2251c01888.png)
+
+M4U app apk: [M4U.zip](https://github.com/LT84/M4U/files/8787579/M4U.zip)
+
